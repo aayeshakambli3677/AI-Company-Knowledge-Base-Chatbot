@@ -1,4 +1,5 @@
 import React from "react";
+import "./KnowledgeBase.css";
 
 function KnowledgeBase() {
   return (

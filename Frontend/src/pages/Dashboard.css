@@ -1,0 +1,146 @@
+.dashboard {
+
+  min-height: calc(100vh - 70px);
+
+  padding: 50px 60px;
+
+  background: transparent;
+
+}
+
+
+/* Header */
+
+.dashboard-header h1 {
+
+  font-size: 38px;
+
+  color: white;
+
+  margin-bottom: 10px;
+
+}
+
+
+.dashboard-header p {
+
+  color: #e0f2fe;
+
+  font-size: 17px;
+
+  margin-bottom: 40px;
+
+}
+
+
+/* Cards Container */
+
+.dashboard-cards {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+  gap: 25px;
+
+}
+
+
+/* Cards */
+
+.card {
+
+  background: rgba(255,255,255,0.90);
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,0.18);
+
+  transition: 0.3s ease;
+
+}
+
+
+.card:hover {
+
+  transform: translateY(-8px);
+
+  box-shadow:
+  0 20px 40px rgba(37,99,235,0.25);
+
+}
+
+
+.card h2 {
+
+  color: #1e3a8a;
+
+  font-size: 22px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.card p {
+
+  color: #475569;
+
+  line-height: 1.6;
+
+  margin-bottom: 20px;
+
+}
+
+
+/* Buttons */
+
+.card button {
+
+  background: #2563eb;
+
+  color: white;
+
+  padding: 12px 24px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  transition: 0.3s;
+
+}
+
+
+.card button:hover {
+
+  background: #1d4ed8;
+
+  transform: translateY(-2px);
+
+}
+
+
+/* Mobile */
+
+@media(max-width:900px){
+
+  .dashboard {
+
+    padding: 30px;
+
+  }
+
+
+  .dashboard-header h1 {
+
+    font-size: 30px;
+
+  }
+
+}

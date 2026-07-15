@@ -1,0 +1,63 @@
+.feature-card {
+
+  background: rgba(255,255,255,0.92);
+
+  padding: 35px 30px;
+
+  width: 320px;
+
+  min-height: 260px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,0.18);
+
+  backdrop-filter: blur(12px);
+
+  transition: all 0.3s ease;
+
+}
+
+
+.feature-card:hover {
+
+  transform: translateY(-10px);
+
+  box-shadow:
+  0 20px 45px rgba(37,99,235,0.25);
+
+}
+
+
+.feature-icon {
+
+  font-size: 55px;
+
+  margin-bottom: 20px;
+
+}
+
+
+.feature-card h3 {
+
+  color: #1e3a8a;
+
+  font-size: 22px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.feature-card p {
+
+  color: #475569;
+
+  line-height: 1.6;
+
+  font-size: 16px;
+
+}

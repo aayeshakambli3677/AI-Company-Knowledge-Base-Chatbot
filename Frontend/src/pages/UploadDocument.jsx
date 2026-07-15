@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./UploadDocument.css";
 
 function UploadDocument() {
   const [selectedFile, setSelectedFile] = useState(null);

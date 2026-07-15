@@ -1,56 +1,82 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Dashboard.css";
 
 function Dashboard() {
   return (
     <div className="dashboard">
 
-      <h1>Welcome to Dashboard 👋</h1>
+      <div className="dashboard-header">
 
-      <p>
-        Manage your documents, knowledge base and interact with LLM.
-      </p>
+        <h1>
+          Welcome to Dashboard 👋
+        </h1>
+
+        <p>
+          Manage your documents, knowledge base and interact with LLM.
+        </p>
+
+      </div>
 
 
       <div className="dashboard-cards">
 
+
         <div className="card">
+
           <h2>📄 Upload Documents</h2>
+
           <p>
-            Upload files and create your knowledge base.
+            Upload files and create your AI-powered knowledge base.
           </p>
 
           <Link to="/upload">
-            <button>Upload</button>
+            <button>
+              Upload
+            </button>
           </Link>
+
         </div>
 
 
+
         <div className="card">
+
           <h2>📚 Knowledge Base</h2>
+
           <p>
-            View and manage your stored documents.
+            View and manage your stored documents easily.
           </p>
 
           <Link to="/knowledge-base">
-            <button>View</button>
+            <button>
+              View
+            </button>
           </Link>
+
         </div>
 
 
+
         <div className="card">
+
           <h2>🤖 Chat with AI</h2>
+
           <p>
-            Ask questions using your LLM assistant.
+            Ask questions and get answers from your documents.
           </p>
 
           <Link to="/chat">
-            <button>Chat</button>
+            <button>
+              Chat
+            </button>
           </Link>
+
         </div>
 
 
       </div>
+
 
     </div>
   );

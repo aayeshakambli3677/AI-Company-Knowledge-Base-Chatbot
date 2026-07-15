@@ -1,3 +1,4 @@
+import FeatureCard from "../components/FeatureCard";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -70,63 +71,34 @@ function Home() {
   </div>
 
 </section>
-
-
-  <section className="features">
+<section className="features">
 
   <h2>
     Powerful Features
   </h2>
 
+
   <div className="feature-cards">
 
-    <div className="feature-card">
-      <div className="feature-icon">
-        📄
-      </div>
-
-      <h3>
-        Document Upload
-      </h3>
-
-      <p>
-        Upload PDF, DOCX and TXT files to build your knowledge base.
-      </p>
-    </div>
+    <FeatureCard
+      icon="📄"
+      title="AI Document Analysis"
+      description="Upload documents and let AI understand your information."
+    />
 
 
-    <div className="feature-card">
-
-      <div className="feature-icon">
-        🤖
-      </div>
-
-      <h3>
-        AI Chat Assistant
-      </h3>
-
-      <p>
-        Ask questions and get intelligent answers using LLM.
-      </p>
-
-    </div>
+    <FeatureCard
+      icon="🧠"
+      title="Smart Knowledge Base"
+      description="Organize and manage your knowledge using AI."
+    />
 
 
-    <div className="feature-card">
-
-      <div className="feature-icon">
-        📚
-      </div>
-
-      <h3>
-        Knowledge Base
-      </h3>
-
-      <p>
-        Organize and manage your uploaded information easily.
-      </p>
-
-    </div>
+    <FeatureCard
+      icon="💬"
+      title="AI Chat Assistant"
+      description="Ask questions and get intelligent answers."
+    />
 
   </div>
 

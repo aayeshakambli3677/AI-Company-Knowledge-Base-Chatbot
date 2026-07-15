@@ -1,12 +1,15 @@
 import React from "react";
+import "./Signup.css";
 
 function Signup() {
   return (
-    <div className="auth-container">
+    <div className="signup-page">
 
-      <div className="auth-card">
+      <div className="signup-card">
 
-        <h1>Signup</h1>
+        <h1>Create Account</h1>
+
+        <p>Join your AI Knowledge Base</p>
 
         <input
           type="text"
@@ -21,6 +24,11 @@ function Signup() {
         <input
           type="password"
           placeholder="Create password"
+        />
+
+        <input
+          type="password"
+          placeholder="Confirm password"
         />
 
         <button>

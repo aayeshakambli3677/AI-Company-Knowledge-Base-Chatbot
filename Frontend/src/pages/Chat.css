@@ -1,0 +1,213 @@
+.chat-container {
+
+  min-height: calc(100vh - 70px);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 40px;
+
+  background: transparent;
+
+}
+
+
+/* Chat Card */
+
+.chat-card {
+
+  width: 650px;
+
+  background: rgba(255,255,255,0.92);
+
+  padding: 40px;
+
+  border-radius: 25px;
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+
+  0 20px 45px rgba(0,0,0,0.20);
+
+}
+
+
+/* Heading */
+
+.chat-card h1 {
+
+  text-align: center;
+
+  color: #1e3a8a;
+
+  font-size: 34px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.chat-card > p {
+
+  text-align: center;
+
+  color: #64748b;
+
+  margin-bottom: 30px;
+
+}
+
+
+/* Chat Response Area */
+
+.chat-response {
+
+  min-height: 250px;
+
+  background: #f8fafc;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  margin-bottom: 25px;
+
+  color: #475569;
+
+  line-height: 1.6;
+
+  border: 1px solid #e2e8f0;
+
+}
+
+
+/* Input Area */
+
+.chat-input {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+
+.chat-input input {
+
+  flex: 1;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  border: 1px solid #cbd5e1;
+
+  font-size: 16px;
+
+}
+
+
+.chat-input input:focus {
+
+  outline: none;
+
+  border-color: #2563eb;
+
+}
+
+
+/* Send Button */
+
+.chat-input button {
+
+  padding: 14px 28px;
+
+  background: #2563eb;
+
+  color: white;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+
+}
+
+
+.chat-input button:hover {
+
+  background: #1d4ed8;
+
+  transform: translateY(-2px);
+
+}
+
+
+/* AI Message */
+
+.ai-message {
+
+  background: #dbeafe;
+
+  padding: 12px 16px;
+
+  border-radius: 12px;
+
+  margin-bottom: 12px;
+
+  color: #1e3a8a;
+
+}
+
+
+/* User Message */
+
+.user-message {
+
+  background: #2563eb;
+
+  color: white;
+
+  padding: 12px 16px;
+
+  border-radius: 12px;
+
+  margin-bottom: 12px;
+
+  text-align: right;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:700px){
+
+  .chat-card {
+
+    width: 100%;
+
+    padding: 25px;
+
+  }
+
+
+  .chat-input {
+
+    flex-direction: column;
+
+  }
+
+
+  .chat-input button {
+
+    width: 100%;
+
+  }
+
+}

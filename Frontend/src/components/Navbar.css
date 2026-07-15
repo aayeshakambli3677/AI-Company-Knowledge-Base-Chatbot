@@ -1,0 +1,138 @@
+.navbar {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 18px 60px;
+
+  background: rgba(255,255,255,0.75);
+
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+}
+
+
+/* Logo */
+
+.logo {
+
+  text-decoration: none;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  color: #1e3a8a;
+
+  letter-spacing: 0.5px;
+
+}
+
+
+.logo span {
+
+  color: #2563eb;
+
+}
+
+
+/* Navigation Links */
+
+.nav-links {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+}
+
+
+.nav-links a {
+
+  text-decoration: none;
+
+  color: #334155;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  transition: 0.3s ease;
+
+}
+
+
+.nav-links a:hover {
+
+  color: #2563eb;
+
+}
+
+
+/* Login Signup Buttons */
+
+.nav-links a:nth-last-child(2),
+.nav-links a:last-child {
+
+  padding: 10px 22px;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+}
+
+
+/* Button Hover */
+
+.nav-links a:nth-last-child(2):hover,
+.nav-links a:last-child:hover {
+
+  background: #1d4ed8;
+
+  color: white;
+
+  transform: translateY(-2px);
+
+}
+
+
+/* Mobile */
+
+@media(max-width:900px){
+
+  .navbar{
+
+    padding: 15px 25px;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+  }
+
+
+  .nav-links{
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+  }
+
+}
