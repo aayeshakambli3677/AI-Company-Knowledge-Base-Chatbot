@@ -1,0 +1,122 @@
+.category-container {
+
+  min-height:100vh;
+
+  padding:50px;
+
+}
+
+
+.category-container h1 {
+
+  color:white;
+
+  text-align:center;
+
+  margin-bottom:30px;
+
+}
+
+
+
+.add-category {
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:15px;
+
+  margin-bottom:40px;
+
+}
+
+
+
+.add-category input {
+
+  padding:14px;
+
+  width:300px;
+
+  border-radius:10px;
+
+  border:1px solid #ccc;
+
+}
+
+
+
+.add-category button {
+
+  background:#2563eb;
+
+  color:white;
+
+  padding:12px 20px;
+
+  border-radius:10px;
+
+}
+
+
+
+.category-list {
+
+  display:flex;
+
+  gap:25px;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+}
+
+
+
+.category-card {
+
+  background:white;
+
+  width:300px;
+
+  padding:25px;
+
+  border-radius:18px;
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+}
+
+
+
+.category-card h2 {
+
+  color:#2563eb;
+
+}
+
+
+
+.category-card p {
+
+  color:#64748b;
+
+}
+
+
+
+.category-card button {
+
+  margin-top:15px;
+
+  background:#ef4444;
+
+  color:white;
+
+  padding:10px 20px;
+
+  border-radius:8px;
+
+}

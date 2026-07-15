@@ -144,3 +144,29 @@
   }
 
 }
+.dashboard-overview {
+
+  background: rgba(255,255,255,0.15);
+
+  padding: 25px;
+
+  border-radius: 18px;
+
+  margin-bottom: 35px;
+
+  backdrop-filter: blur(10px);
+
+}
+
+
+.dashboard-overview h2 {
+
+  color: white;
+
+  margin-bottom: 10px;
+
+  font-size: 26px;
+
+}
+
+

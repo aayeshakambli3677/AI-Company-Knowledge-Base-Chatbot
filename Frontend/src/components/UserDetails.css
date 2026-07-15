@@ -1,0 +1,32 @@
+.user-details {
+
+  margin-top: 30px;
+
+  background: rgba(255,255,255,0.88);
+
+  padding: 25px;
+
+  border-radius: 18px;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.15);
+
+}
+
+
+.user-details h2 {
+
+  color:#2563eb;
+
+  margin-bottom:20px;
+
+}
+
+
+.user-details p {
+
+  color:#475569;
+
+  margin:10px 0;
+
+}

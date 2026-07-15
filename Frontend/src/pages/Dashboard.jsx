@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
 
+
 function Dashboard() {
   return (
     <div className="dashboard">
@@ -21,7 +22,6 @@ function Dashboard() {
 
       <div className="dashboard-cards">
 
-
         <div className="card">
 
           <h2>📄 Upload Documents</h2>
@@ -37,7 +37,6 @@ function Dashboard() {
           </Link>
 
         </div>
-
 
 
         <div className="card">
@@ -57,7 +56,6 @@ function Dashboard() {
         </div>
 
 
-
         <div className="card">
 
           <h2>🤖 Chat with AI</h2>
@@ -74,9 +72,7 @@ function Dashboard() {
 
         </div>
 
-
       </div>
-
 
     </div>
   );

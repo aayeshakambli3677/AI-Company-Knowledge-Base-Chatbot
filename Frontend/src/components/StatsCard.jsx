@@ -1,24 +1,20 @@
 import React from "react";
 import "./StatsCard.css";
 
-function StatsCard({ title, value }) {
-
+function StatsCard({ icon, title, value }) {
   return (
+    <div className="stat-card">
 
-    <div className="stats-card">
+      <div className="stat-icon">
+        {icon}
+      </div>
 
-      <h3>
-        {title}
-      </h3>
+      <h3>{title}</h3>
 
-      <span>
-        {value}
-      </span>
+      <h2>{value}</h2>
 
     </div>
-
   );
-
 }
 
 export default StatsCard;

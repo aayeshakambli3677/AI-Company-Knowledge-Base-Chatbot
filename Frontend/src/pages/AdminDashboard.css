@@ -1,0 +1,71 @@
+.admin-dashboard {
+
+  min-height: calc(100vh - 70px);
+
+  padding: 50px 60px;
+
+}
+
+
+.admin-dashboard h1 {
+
+  color: white;
+
+  font-size: 38px;
+
+  margin-bottom: 10px;
+
+}
+
+
+.admin-dashboard > p {
+
+  color: #e0f2fe;
+
+  font-size: 17px;
+
+  margin-bottom: 35px;
+
+}
+
+
+.admin-overview {
+
+  background: rgba(255,255,255,0.15);
+
+  padding: 25px;
+
+  border-radius: 18px;
+
+  backdrop-filter: blur(10px);
+
+  margin-bottom: 35px;
+
+}
+
+
+.admin-overview h2 {
+
+  color: white;
+
+  margin-bottom: 10px;
+
+}
+
+
+.admin-overview p {
+
+  color: #e0f2fe;
+
+}
+
+
+.stats {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+
+  gap: 25px;
+
+}

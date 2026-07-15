@@ -1,32 +1,142 @@
-import React from "react";
+import React, { useState } from "react";
+import DocumentDetails from "../components/DocumentDetails";
 import "./KnowledgeBase.css";
 
+
 function KnowledgeBase() {
+
+
+  const documents = [
+
+    {
+      id: 1,
+      name: "Company_Report.pdf",
+      status: "Ready for AI Chat",
+      uploadedBy: "Anushka"
+    },
+
+    {
+      id: 2,
+      name: "Employee_Data.docx",
+      status: "Processing",
+      uploadedBy: "Ayesha"
+    }
+
+  ];
+
+
+
+  const [selectedDocument, setSelectedDocument] = useState(null);
+
+  const [documentList, setDocumentList] = useState(documents);
+
+
+
+  const handleDelete = (id) => {
+
+
+    const updatedDocuments = documentList.filter(
+      (doc) => doc.id !== id
+    );
+
+
+    setDocumentList(updatedDocuments);
+
+
+
+    if(selectedDocument?.id === id){
+
+      setSelectedDocument(null);
+
+    }
+
+  };
+
+
+
   return (
+
     <div className="kb-container">
 
-      <h1>📚 Knowledge Base</h1>
+
+      <h1>
+        📚 Knowledge Base
+      </h1>
+
 
       <p>
         Your uploaded documents will appear here.
       </p>
 
-      <div className="document-card">
 
-        <h3>Example Document.pdf</h3>
 
-        <p>
-          Status: Ready for AI Chat
-        </p>
+      <div className="documents-list">
 
-        <button>
-          View Document
-        </button>
+
+        {
+          documentList.map((doc) => (
+
+            <div
+              className="document-card"
+              key={doc.id}
+            >
+
+
+              <h3>
+                📄 {doc.name}
+              </h3>
+
+
+              <p>
+                Status: {doc.status}
+              </p>
+
+
+
+              <button
+                onClick={() => setSelectedDocument(doc)}
+              >
+                View Document
+              </button>
+
+
+
+              <button
+                onClick={() => handleDelete(doc.id)}
+              >
+                Delete Document
+              </button>
+
+
+
+            </div>
+
+          ))
+        }
+
 
       </div>
 
+
+
+
+      {
+        selectedDocument && (
+
+          <DocumentDetails
+            document={selectedDocument}
+          />
+
+        )
+      }
+
+
+
     </div>
+
   );
+
 }
+
 
 export default KnowledgeBase;
