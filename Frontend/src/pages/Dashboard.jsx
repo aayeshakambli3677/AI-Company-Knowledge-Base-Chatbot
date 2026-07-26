@@ -1,16 +1,36 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 import "./Dashboard.css";
 
-
 function Dashboard() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("/users/me");
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+
+      alert("Please login first");
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="dashboard">
 
       <div className="dashboard-header">
 
         <h1>
-          Welcome to Dashboard 👋
+          Welcome {user ? user.name : "User"} 👋
         </h1>
 
         <p>
@@ -19,11 +39,9 @@ function Dashboard() {
 
       </div>
 
-
       <div className="dashboard-cards">
 
         <div className="card">
-
           <h2>📄 Upload Documents</h2>
 
           <p>
@@ -31,16 +49,11 @@ function Dashboard() {
           </p>
 
           <Link to="/upload">
-            <button>
-              Upload
-            </button>
+            <button>Upload</button>
           </Link>
-
         </div>
 
-
         <div className="card">
-
           <h2>📚 Knowledge Base</h2>
 
           <p>
@@ -48,16 +61,11 @@ function Dashboard() {
           </p>
 
           <Link to="/knowledge-base">
-            <button>
-              View
-            </button>
+            <button>View</button>
           </Link>
-
         </div>
 
-
         <div className="card">
-
           <h2>🤖 Chat with AI</h2>
 
           <p>
@@ -65,11 +73,8 @@ function Dashboard() {
           </p>
 
           <Link to="/chat">
-            <button>
-              Chat
-            </button>
+            <button>Chat</button>
           </Link>
-
         </div>
 
       </div>

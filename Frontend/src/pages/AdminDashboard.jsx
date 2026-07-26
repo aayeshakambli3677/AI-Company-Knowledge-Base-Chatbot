@@ -1,50 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../services/api";
 import StatsCard from "../components/StatsCard";
 import UserTable from "../components/UserTable";
 import "./AdminDashboard.css";
 
-
-const statsData = [
-  {
-    icon: "📄",
-    title: "Documents",
-    value: "120"
-  },
-  {
-    icon: "👥",
-    title: "Users",
-    value: "50"
-  },
-  {
-    icon: "💬",
-    title: "Chats",
-    value: "300"
-  },
-  {
-    icon: "📂",
-    title: "Categories",
-    value: "10"
-  }
-];
-
-
 function AdminDashboard() {
 
+  const [stats, setStats] = useState({
+    documents: 0,
+    users: 0,
+    chats: 0,
+    categories: 0,
+  });
+
+  const [adminName, setAdminName] = useState("");
+
+  useEffect(() => {
+    fetchDashboard();
+    fetchStats();
+  }, []);
+
+  const fetchDashboard = async () => {
+    try {
+      const response = await api.get("/admin/dashboard");
+      setAdminName(response.data.admin);
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data?.detail ||
+        "Unauthorized"
+      );
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      const response = await api.get("/admin/stats");
+      setStats(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const statsData = [
+    {
+      icon: "📄",
+      title: "Documents",
+      value: stats.documents,
+    },
+    {
+      icon: "👥",
+      title: "Users",
+      value: stats.users,
+    },
+    {
+      icon: "💬",
+      title: "Chats",
+      value: stats.chats,
+    },
+    {
+      icon: "📂",
+      title: "Categories",
+      value: stats.categories,
+    },
+  ];
+
   return (
-
     <div className="admin-dashboard">
-
 
       <h1>
         Admin Dashboard 👑
       </h1>
 
-
       <p>
-        Manage users, documents, chats and AI knowledge base.
+        Welcome {adminName}
       </p>
-
-
 
       <div className="admin-overview">
 
@@ -58,40 +88,25 @@ function AdminDashboard() {
 
       </div>
 
-
-
       <div className="stats">
 
-        {
-          statsData.map((item, index) => (
+        {statsData.map((item, index) => (
 
-            <StatsCard
+          <StatsCard
+            key={index}
+            icon={item.icon}
+            title={item.title}
+            value={item.value}
+          />
 
-              key={index}
-
-              icon={item.icon}
-
-              title={item.title}
-
-              value={item.value}
-
-            />
-
-          ))
-        }
+        ))}
 
       </div>
 
-
-
       <UserTable />
 
-
     </div>
-
   );
-
 }
-
 
 export default AdminDashboard;

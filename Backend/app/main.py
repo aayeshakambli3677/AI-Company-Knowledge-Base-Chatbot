@@ -1,5 +1,8 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from app.database.base import Base
+from app.database.db import engine
 from app.routes.auth_routes import router as auth_router
 from app.routes.user_routes import router as user_router
 from app.routes.admin_routes import router as admin_router
@@ -12,7 +15,16 @@ from app.middleware.exception_handler import global_exception_handler
 app = FastAPI(
     title="AI Company Knowledge Base API"
 )
+Base.metadata.create_all(bind=engine)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173",],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+...
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(admin_router)
@@ -27,3 +39,4 @@ def home():
     return {
         "message": "API Running"
     }
+

@@ -41,15 +41,11 @@ def register(
     }
 
 
-@router.post(
-    "/login",
-    response_model=TokenResponse
-)
+@router.post("/login", response_model=TokenResponse)
 def login(
     request: LoginRequest,
     db: Session = Depends(get_db)
 ):
-
     token = login_user(
         db,
         request.email,

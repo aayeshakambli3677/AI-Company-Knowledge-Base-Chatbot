@@ -1,8 +1,5 @@
 from app.models.category import Category
 
-
-from app.models.category import Category
-
 def create_category(db, category_data):
 
     existing_category = db.query(Category).filter(

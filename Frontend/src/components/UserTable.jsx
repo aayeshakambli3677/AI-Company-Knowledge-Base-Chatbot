@@ -1,59 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import api from "../services/api";
 import "./UserTable.css";
 import UserDetails from "./UserDetails";
 
-
 function UserTable() {
 
-
-  const users = [
-    {
-      id: 1,
-      name: "Anushka",
-      email: "anushka@gmail.com",
-      role: "Admin",
-      status: "Active"
-    },
-    {
-      id: 2,
-      name: "Ayesha",
-      email: "ayesha@gmail.com",
-      role: "User",
-      status: "Active"
-    }
-  ];
-
-
   const [selectedUser, setSelectedUser] = useState(null);
+  const [userList, setUserList] = useState([]);
 
-  const [userList, setUserList] = useState(users);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-
-
-  const handleDelete = (id) => {
-
-    const updatedUsers = userList.filter(
-      (user) => user.id !== id
-    );
-
-    setUserList(updatedUsers);
-
-    // agar deleted user details me open hai
-    if(selectedUser?.id === id){
-      setSelectedUser(null);
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get("/admin/users");
+      setUserList(response.data);
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data?.detail ||
+        "Failed to load users"
+      );
     }
-
   };
 
+  const handleView = async (id) => {
+    try {
+      const response = await api.get(`/admin/users/${id}`);
+      setSelectedUser(response.data);
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data?.detail ||
+        "User not found"
+      );
+    }
+  };
 
+  const handleDelete = async (id) => {
+
+    if (!window.confirm("Delete this user?")) {
+      return;
+    }
+
+    try {
+
+      await api.delete(`/admin/users/${id}`);
+
+      setUserList(
+        userList.filter((user) => user.id !== id)
+      );
+
+      if (selectedUser?.id === id) {
+        setSelectedUser(null);
+      }
+
+      alert("User deleted successfully");
+
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error.response?.data?.detail ||
+        "Failed to delete user"
+      );
+    }
+  };
 
   return (
 
     <div className="user-table">
 
-
       <h2>👥 Users</h2>
-
 
       <table>
 
@@ -68,68 +87,51 @@ function UserTable() {
 
         </thead>
 
-
-
         <tbody>
 
-          {
-            userList.map((user) => (
+          {userList.map((user) => (
 
-              <tr key={user.id}>
+            <tr key={user.id}>
 
-                <td>{user.id}</td>
+              <td>{user.id}</td>
 
-                <td>{user.name}</td>
+              <td>{user.name}</td>
 
-                <td>{user.email}</td>
+              <td>{user.email}</td>
 
+              <td>
 
-                <td>
+                <button
+                  className="view-btn"
+                  onClick={() => handleView(user.id)}
+                >
+                  View
+                </button>
 
-                  <button
-                    className="view-btn"
-                    onClick={() => setSelectedUser(user)}
-                  >
-                    View
-                  </button>
+                <button
+                  className="remove-btn"
+                  onClick={() => handleDelete(user.id)}
+                >
+                  Remove
+                </button>
 
+              </td>
 
-                  <button
-                    className="remove-btn"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    Remove
-                  </button>
+            </tr>
 
-
-                </td>
-
-
-              </tr>
-
-            ))
-          }
+          ))}
 
         </tbody>
 
-
       </table>
 
-
-
-      {
-        selectedUser && (
-          <UserDetails user={selectedUser} />
-        )
-      }
-
-
+      {selectedUser && (
+        <UserDetails user={selectedUser} />
+      )}
 
     </div>
 
   );
-
 }
-
 
 export default UserTable;

@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     # Database
-    DATABASE_URL: str = "mysql+pymysql://root:password@localhost/company_chatbot"
+    DATABASE_URL: str = "mysql+pymysql://root:root@localhost/company_chatbot"
 
     # JWT
     SECRET_KEY: str = "your_secret_key"
