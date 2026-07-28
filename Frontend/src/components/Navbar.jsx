@@ -16,7 +16,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
-        🤖 <span>Knowledge Base AI</span>
+        🤖 <span> Company Knowledge Hub </span>
       </Link>
 
       <div className="nav-links">
