@@ -33,7 +33,6 @@ function UploadDocument() {
       alert("Please enter document title");
       return;
     }
-
     if (!categoryId) {
       alert("Please select a category");
       return;
@@ -89,19 +88,21 @@ function UploadDocument() {
         </p>
 
         <input
+        className="title"
           type="text"
           placeholder="Enter Document Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-        />
+        /><br></br>
 
         <select
+        className="category"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
         >
           <option value="">
             Select Category
-          </option>
+          </option><br></br>
 
           {categories.map((category) => (
             <option

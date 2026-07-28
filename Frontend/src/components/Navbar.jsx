@@ -24,7 +24,7 @@ function Navbar() {
 
         <Link to="/dashboard">Dashboard</Link>
 
-        <Link to="/knowledge-base">Knowledge Base</Link>
+        <Link to="/knowledge-base">View Document</Link>
 
         <Link to="/admin-dashboard">Admin</Link>
 

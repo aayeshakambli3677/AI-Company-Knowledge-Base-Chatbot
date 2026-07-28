@@ -90,6 +90,10 @@
 
   margin-bottom: 25px;
 
+  margin-top: 26px;
+
+  align-items: center;
+
 }
 
 
@@ -146,4 +150,22 @@
 
   }
 
+}
+
+.title
+{
+  height: 40px;
+  width: 360px;
+  align-items: center;
+  display: flex;
+  word-wrap: wrap;
+}
+
+.category
+{
+  height: 40px;
+  width: 360px;
+  align-items: center;
+  display: flex;
+  word-wrap: wrap;
 }
