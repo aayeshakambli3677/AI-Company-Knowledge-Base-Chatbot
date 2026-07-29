@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from app.database.db import get_db
 
 from app.models.user import User
-
+from app.schemas.chat_schema import ChatRequest
+from app.ai.rag_instance import rag
 from app.middleware.auth_middleware import (
     get_current_user,
     admin_required
@@ -21,6 +22,18 @@ router = APIRouter(
     prefix="/chats",
     tags=["Chats"]
 )
+
+@router.post("/ask")
+def ask_question(payload: ChatRequest):
+
+    answer = rag.answer_question(
+        payload.question,
+        payload.document_id
+    )
+
+    return {
+        "answer": answer
+    }
 
 @router.get("/history")
 def chat_history(

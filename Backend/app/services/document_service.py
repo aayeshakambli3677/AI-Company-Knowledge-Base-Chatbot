@@ -2,7 +2,8 @@ import os
 import shutil
 
 from sqlalchemy.orm import Session
-
+from app.utils.document_parser import extract_text
+from app.ai.rag_instance import rag
 from app.models.document import Document
 
 
@@ -47,7 +48,16 @@ def save_document(
     db.add(document)
     db.commit()
     db.refresh(document)
+    text = extract_text(file_path)
+    print("EXTRACTED TEXT:")
+    print(text[:1000])
 
+    chunks = [
+    text[i:i+500]
+    for i in range(0, len(text), 500)
+    ]
+    rag.add_documents(chunks,document.id)
+    print("Chunks:", len(chunks))
     return document
 
 def get_all_documents(db):

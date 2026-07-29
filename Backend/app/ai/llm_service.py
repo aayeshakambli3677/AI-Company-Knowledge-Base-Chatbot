@@ -1,10 +1,23 @@
+import os
 from abc import ABC, abstractmethod
+from dotenv import load_dotenv
+import google.generativeai as genai
+from google.api_core.exceptions import ResourceExhausted
 
+def generate_response(self, prompt: str) -> str:
+    try:
+        response = self.model.generate_content(prompt)
+        return response.text
+
+    except Exception as e:
+        print("Gemini Error:", e)
+
+        return """
+        Demo Mode Response:
+        According to the uploaded company documents, employees are entitled to company benefits and should follow organizational policies.
+        """
 
 class BaseLLMService(ABC):
-    """
-    Abstract base class for LLM services.
-    """
 
     @abstractmethod
     def generate_response(self, prompt: str) -> str:
@@ -12,23 +25,18 @@ class BaseLLMService(ABC):
 
 
 class LLMService(BaseLLMService):
-    """
-    Placeholder LLM Service.
-    Replace the implementation with OpenAI, Gemini, or another provider.
-    """
 
     def __init__(self):
-        pass
+        api_key = os.getenv("GEMINI_API_KEY")
+
+        genai.configure(api_key=api_key)
+
+        self.model = genai.GenerativeModel(
+            "gemini-flash-latest"
+        )
 
     def generate_response(self, prompt: str) -> str:
-        """
-        Generate a response from the LLM.
 
-        Args:
-            prompt (str): Input prompt.
+        response = self.model.generate_content(prompt)
 
-        Returns:
-            str: LLM response.
-        """
-        # Replace this with actual LLM API call
-        return "LLM response will appear here."
+        return response.text

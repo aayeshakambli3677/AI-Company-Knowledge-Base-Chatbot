@@ -1,9 +1,73 @@
-  import React, { useState } from "react";
+ import React, { useState, useEffect } from "react";
   import "./Chat.css";
+  import api from "../services/api";
 
   function Chat() {
 
     const [message, setMessage] = useState("");
+const [messages, setMessages] = useState([]);
+
+const [documents, setDocuments] = useState([]);
+  const [selectedDocument, setSelectedDocument] = useState("");
+
+  useEffect(() => {
+  fetchDocuments();
+}, []);
+
+const fetchDocuments = async () => {
+  try {
+    const res = await api.get("/documents");
+
+    setDocuments(res.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+    const handleSend = async () => {
+
+  if (!message.trim()) return;
+
+  const userMessage = message;
+
+  setMessages(prev => [
+    ...prev,
+    {
+      sender: "user",
+      text: userMessage
+    }
+  ]);
+
+  setMessage("");
+
+  try {
+
+    const res = await api.post("/chats/ask", {
+  question: userMessage,
+  document_id: Number(selectedDocument)
+});
+
+    setMessages(prev => [
+      ...prev,
+      {
+        sender: "ai",
+        text: res.data.answer
+      }
+    ]);
+
+  } catch (error) {
+
+    setMessages(prev => [
+      ...prev,
+      {
+        sender: "ai",
+        text: "AI service is temporarily unavailable. Please try again later."
+      }
+    ]);
+
+  }
+};
 
     return (
       <div className="chat-container">
@@ -17,11 +81,49 @@
           </p>
 
           <div className="chat-response">
-            AI response will appear here...
-          </div>
+
+  {messages.length === 0 && (
+    <p>Start chatting...</p>
+  )}
+
+  {messages.map((msg, index) => (
+    <div key={index}>
+      <b>{msg.sender === "user" ? "You" : "AI"}:</b>
+      {" "}
+      {msg.text}
+    </div>
+  ))}
+
+</div>
 
           <div className="chat-input">
 
+            <div style={{ marginBottom: "15px", height:"60px"}}>
+
+  <select
+  style={{height:"60px",display:"flex", gap:"16",borderRadius:"10px", border:"1px solid grey"}}
+    value={selectedDocument}
+    onChange={(e) =>
+      setSelectedDocument(e.target.value)
+    }
+  >
+
+    <option value="">
+      Select Document
+    </option>
+
+    {documents.map((doc) => (
+      <option
+        key={doc.id}
+        value={doc.id}
+      >
+        {doc.title}
+      </option>
+    ))}
+
+  </select>
+
+</div>
             <input
               type="text"
               placeholder="Ask something..."
@@ -29,9 +131,9 @@
               onChange={(e) => setMessage(e.target.value)}
             />
 
-            <button>
-              Send
-            </button>
+            <button onClick={handleSend}>
+  Send
+</button>
 
           </div>
 

@@ -16,44 +16,63 @@ class VectorStore:
         # Store original documents
         self.documents = []
 
-    def add_document(self, document, embedding):
-        """
-        Add a document and its embedding to the vector store.
-        """
-
+    def add_document(
+    self,
+    document,
+    embedding,
+    document_id
+    ):
         embedding = np.array([embedding]).astype("float32")
-
         self.index.add(embedding)
+        self.documents.append({
+        "document_id": document_id,
+        "text": document
+    })
 
-        self.documents.append(document)
+    def add_documents(self,documents,embeddings,document_id):
+        for doc, emb in zip(
+        documents,
+        embeddings
+    ):
+            self.add_document(
+            doc,
+            emb,
+            document_id
+        )
 
-    def add_documents(self, documents, embeddings):
-        """
-        Add multiple documents.
-        """
-
-        for doc, emb in zip(documents, embeddings):
-            self.add_document(doc, emb)
-
-    def search(self, query_embedding, top_k=3):
-        """
-        Search for the most similar documents.
-        """
-
+    def search(
+    self,
+    query_embedding,
+    top_k=3,
+    document_id=None
+    ):
         if len(self.documents) == 0:
             return []
+        query_embedding = np.array(
+        [query_embedding]
+    ).astype("float32")
 
-        query_embedding = np.array([query_embedding]).astype("float32")
-
-        distances, indices = self.index.search(query_embedding, top_k)
-
+        distances, indices = self.index.search(
+        query_embedding,
+        len(self.documents)
+        )
         results = []
-
         for idx in indices[0]:
-            if idx < len(self.documents):
-                results.append(self.documents[idx])
+            if idx >= len(self.documents):
+                continue
 
-        return results
+            doc = self.documents[idx]
+
+            if (
+            document_id is None
+            or doc["document_id"] == document_id
+            ):
+                results.append(
+                doc["text"]
+            )
+            if len(results) >= top_k:
+                break
+            return results
 
     def document_count(self):
         """
