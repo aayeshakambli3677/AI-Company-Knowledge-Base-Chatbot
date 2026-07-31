@@ -2,20 +2,10 @@ import os
 from abc import ABC, abstractmethod
 from dotenv import load_dotenv
 import google.generativeai as genai
-from google.api_core.exceptions import ResourceExhausted
 
-def generate_response(self, prompt: str) -> str:
-    try:
-        response = self.model.generate_content(prompt)
-        return response.text
+# Load .env file
+load_dotenv()
 
-    except Exception as e:
-        print("Gemini Error:", e)
-
-        return """
-        Demo Mode Response:
-        According to the uploaded company documents, employees are entitled to company benefits and should follow organizational policies.
-        """
 
 class BaseLLMService(ABC):
 
@@ -29,6 +19,9 @@ class LLMService(BaseLLMService):
     def __init__(self):
         api_key = os.getenv("GEMINI_API_KEY")
 
+        if not api_key:
+            raise Exception("GEMINI_API_KEY not found in environment variables")
+
         genai.configure(api_key=api_key)
 
         self.model = genai.GenerativeModel(
@@ -36,7 +29,14 @@ class LLMService(BaseLLMService):
         )
 
     def generate_response(self, prompt: str) -> str:
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text
 
-        response = self.model.generate_content(prompt)
+        except Exception as e:
+            print("Gemini Error:", e)
 
-        return response.text
+            return """
+            Demo Mode Response:
+            According to the uploaded company documents, employees are entitled to company benefits and should follow organizational policies.
+            """
