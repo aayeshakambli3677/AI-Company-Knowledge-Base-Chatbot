@@ -30,3 +30,12 @@
   margin:10px 0;
 
 }
+
+.document-content {
+  max-height: 500px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

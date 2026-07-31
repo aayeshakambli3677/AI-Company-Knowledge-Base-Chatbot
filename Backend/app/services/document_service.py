@@ -37,10 +37,18 @@ def save_document(
             buffer
         )
 
+    # Extract document text
+    text = extract_text(file_path)
+
+    print("EXTRACTED TEXT:")
+    print(text[:1000])
+
+    # Save document with content
     document = Document(
         title=title,
         file_name=file_name,
         file_path=file_path,
+        content=text,
         category_id=category_id,
         uploaded_by=uploaded_by
     )
@@ -48,27 +56,29 @@ def save_document(
     db.add(document)
     db.commit()
     db.refresh(document)
-    text = extract_text(file_path)
-    print("EXTRACTED TEXT:")
-    print(text[:1000])
 
+    # Split text for RAG
     chunks = [
-    text[i:i+500]
-    for i in range(0, len(text), 500)
+        text[i:i+500]
+        for i in range(0, len(text), 500)
     ]
-    rag.add_documents(chunks,document.id)
+
+    rag.add_documents(chunks, document.id)
+
     print("Chunks:", len(chunks))
+
     return document
+
 
 def get_all_documents(db):
     return db.query(Document).all()
+
 
 def get_document_by_id(db, document_id):
     return db.query(Document).filter(
         Document.id == document_id
     ).first()
 
-import os
 
 def delete_document(
     db,

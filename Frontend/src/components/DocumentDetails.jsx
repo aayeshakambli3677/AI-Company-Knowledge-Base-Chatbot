@@ -27,6 +27,19 @@ function DocumentDetails({ document }) {
         <strong>Uploaded By (User ID):</strong> {document.uploaded_by}
       </p>
 
+
+      <hr />
+
+      <h3>📖 Document Content</h3>
+
+      <div className="document-content">
+        {document.content ? (
+          document.content
+        ) : (
+          "No content available"
+        )}
+      </div>
+
     </div>
   );
 }
