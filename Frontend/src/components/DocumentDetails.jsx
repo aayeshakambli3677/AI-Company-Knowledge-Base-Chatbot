@@ -28,7 +28,7 @@ function DocumentDetails({ document }) {
       </p>
 
 
-      <hr />
+      <hr /><br></br><br></br>
 
       <h3>📖 Document Content</h3>
 

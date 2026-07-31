@@ -37,7 +37,6 @@ function Categories() {
       setName("");
       setDescription("");
 
-      alert("Category added successfully");
     } catch (error) {
       console.log(error);
 

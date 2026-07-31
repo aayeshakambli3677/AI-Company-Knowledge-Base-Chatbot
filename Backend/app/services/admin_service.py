@@ -4,6 +4,7 @@ from app.models.user import User
 from app.models.document import Document
 from app.models.chat import Chat
 from app.models.feedback import Feedback
+from app.models.category import Category
 
 
 def get_dashboard_stats(db: Session):
@@ -14,11 +15,11 @@ def get_dashboard_stats(db: Session):
 
     total_chats = db.query(Chat).count()
 
-    total_feedbacks = db.query(Feedback).count()
+    total_categories = db.query(Category).count()
 
     return {
-        "total_users": total_users,
-        "total_documents": total_documents,
-        "total_chats": total_chats,
-        "total_feedbacks": total_feedbacks
+        "users": total_users,
+        "documents": total_documents,
+        "chats": total_chats,
+        "categories": total_categories
     }

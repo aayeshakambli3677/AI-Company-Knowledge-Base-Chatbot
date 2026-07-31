@@ -24,7 +24,6 @@ function Login() {
       // Save JWT token
       localStorage.setItem("token", response.data.access_token);
 
-      alert("Login Successful!");
 
       // Redirect to Dashboard
       navigate("/dashboard");

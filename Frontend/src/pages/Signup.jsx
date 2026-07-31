@@ -49,7 +49,6 @@ function Signup() {
         password: formData.password,
       });
 
-      alert("Registration Successful");
       navigate("/login");
 
     } catch (error) {
