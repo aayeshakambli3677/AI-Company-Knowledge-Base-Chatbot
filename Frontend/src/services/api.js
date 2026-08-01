@@ -1,17 +1,44 @@
+// import axios from "axios";
+
+// const api = axios.create({
+//   baseURL:   "https://ai-company-knowledge-base-chatbot.onrender.com",
+// });
+
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+
+//   return config;
+// });
+
+// export default api;
+
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:   "https://ai-company-knowledge-base-chatbot.onrender.com",
+  baseURL: "https://ai-company-knowledge-base-chatbot.onrender.com",
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+api.interceptors.request.use(
+  (config) => {
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    const token = localStorage.getItem("token");
+
+    console.log("TOKEN:", token);
+
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return config;
-});
+);
 
 export default api;

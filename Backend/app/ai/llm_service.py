@@ -25,7 +25,7 @@ class LLMService(BaseLLMService):
         genai.configure(api_key=api_key)
 
         self.model = genai.GenerativeModel(
-            "gemini-flash-latest"
+            "gemini-2.5-flash"
         )
 
     def generate_response(self, prompt: str) -> str:

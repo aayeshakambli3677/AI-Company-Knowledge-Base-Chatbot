@@ -7,7 +7,7 @@ from app.models.user import User
 from app.models.chat import Chat
 
 from app.schemas.chat_schema import ChatRequest
-from app.ai.rag_instance import rag
+from app.ai.rag_instance import get_rag
 
 from app.middleware.auth_middleware import (
     get_current_user,
@@ -35,10 +35,21 @@ def ask_question(
     db: Session = Depends(get_db)
 ):
 
-    answer = rag.answer_question(
-        payload.question,
-        payload.document_id
-    )
+    try:
+        rag = get_rag()
+
+        answer = rag.answer_question(
+            payload.question,
+            payload.document_id
+        )
+
+    except Exception as e:
+        print("CHATBOT ERROR:", e)
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
     # Save chat history
     chat = Chat(

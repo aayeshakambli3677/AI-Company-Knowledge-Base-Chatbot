@@ -22,7 +22,10 @@ function Login() {
       });
 
       // Save JWT token
-      localStorage.setItem("token", response.data.access_token);
+      const token = response.data.access_token;
+      console.log("TOKEN FROM BACKEND:", token);
+      localStorage.setItem("token", token);
+      console.log("TOKEN AFTER SAVE:", localStorage.getItem("token"));
 
 
       // Redirect to Dashboard

@@ -1,146 +1,170 @@
- import React, { useState, useEffect } from "react";
-  import "./Chat.css";
-  import api from "../services/api";
+import React, { useState, useEffect } from "react";
+import "./Chat.css";
+import api from "../services/api";
 
-  function Chat() {
+function Chat() {
 
-    const [message, setMessage] = useState("");
-const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
-const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState("");
 
   useEffect(() => {
-  fetchDocuments();
-}, []);
+    fetchDocuments();
+  }, []);
 
-const fetchDocuments = async () => {
-  try {
-    const res = await api.get("/documents");
 
-    setDocuments(res.data);
+  const fetchDocuments = async () => {
+    try {
+      const res = await api.get("/documents");
+      setDocuments(res.data);
 
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-    const handleSend = async () => {
-
-  if (!message.trim()) return;
-
-  const userMessage = message;
-
-  setMessages(prev => [
-    ...prev,
-    {
-      sender: "user",
-      text: userMessage
+    } catch (error) {
+      console.log("Document error:", error);
     }
-  ]);
+  };
 
-  setMessage("");
 
-  try {
+  const handleSend = async () => {
 
-    const res = await api.post("/chats/ask", {
-  question: userMessage,
-  document_id: Number(selectedDocument)
-});
+    if (!message.trim()) return;
+
+    const userMessage = message;
 
     setMessages(prev => [
       ...prev,
       {
-        sender: "ai",
-        text: res.data.answer
+        sender: "user",
+        text: userMessage
       }
     ]);
 
-  } catch (error) {
+    setMessage("");
 
-    setMessages(prev => [
-      ...prev,
-      {
-        sender: "ai",
-        text: "AI service is temporarily unavailable. Please try again later."
-      }
-    ]);
 
-  }
-};
+    try {
 
-    return (
-      <div className="chat-container">
+      const token = localStorage.getItem("token");
 
-        <div className="chat-card">
+      const res = await api.post(
+        "/chats/ask",
+        {
+          question: userMessage,
+          document_id: Number(selectedDocument)
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
-          <h1>🤖 Chat with AI</h1>
 
-          <p>
-            Ask questions from your knowledge base.
-          </p>
+      setMessages(prev => [
+        ...prev,
+        {
+          sender: "ai",
+          text: res.data.answer
+        }
+      ]);
 
-          <div className="chat-response">
 
-  {messages.length === 0 && (
-    <p>Start chatting...</p>
-  )}
+    } catch (error) {
 
-  {messages.map((msg, index) => (
-    <div key={index}>
-      <b>{msg.sender === "user" ? "You" : "AI"}:</b>
-      {" "}
-      {msg.text}
-    </div>
-  ))}
+      console.log("Chat error:", error);
 
-</div>
+      setMessages(prev => [
+        ...prev,
+        {
+          sender: "ai",
+          text: "AI service is temporarily unavailable."
+        }
+      ]);
 
-          <div className="chat-input">
-
-            <div style={{ marginBottom: "15px", height:"60px"}}>
-
-  <select
-  style={{height:"60px",display:"flex", gap:"16",borderRadius:"10px", border:"1px solid grey"}}
-    value={selectedDocument}
-    onChange={(e) =>
-      setSelectedDocument(e.target.value)
     }
-  >
+  };
 
-    <option value="">
-      Select Document
-    </option>
 
-    {documents.map((doc) => (
-      <option
-        key={doc.id}
-        value={doc.id}
-      >
-        {doc.title}
-      </option>
-    ))}
+  return (
+    <div className="chat-container">
 
-  </select>
+      <div className="chat-card">
 
-</div>
-            <input
-              type="text"
-              placeholder="Ask something..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
+        <h1>🤖 Chat with AI</h1>
 
-            <button onClick={handleSend}>
-  Send
-</button>
+        <p>
+          Ask questions from your knowledge base.
+        </p>
 
-          </div>
+
+        <div className="chat-response">
+
+          {messages.length === 0 && (
+            <p>Start chatting...</p>
+          )}
+
+
+          {messages.map((msg, index) => (
+            <div key={index}>
+              <b>
+                {msg.sender === "user" ? "You" : "AI"}:
+              </b>{" "}
+              {msg.text}
+            </div>
+          ))}
+
+        </div>
+
+
+        <div className="chat-input">
+
+
+          <select
+            value={selectedDocument}
+            onChange={(e) =>
+              setSelectedDocument(e.target.value)
+            }
+          >
+
+            <option value="">
+              Select Document
+            </option>
+
+
+            {documents.map((doc) => (
+              <option
+                key={doc.id}
+                value={doc.id}
+              >
+                {doc.title}
+              </option>
+            ))}
+
+          </select>
+
+
+          <input
+            type="text"
+            placeholder="Ask something..."
+            value={message}
+            onChange={(e) =>
+              setMessage(e.target.value)
+            }
+          />
+
+
+          <button onClick={handleSend}>
+            Send
+          </button>
+
 
         </div>
 
       </div>
-    );
-  }
 
-  export default Chat;
+    </div>
+  );
+}
+
+export default Chat;
