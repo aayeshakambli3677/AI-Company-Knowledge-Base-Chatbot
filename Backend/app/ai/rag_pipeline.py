@@ -7,13 +7,30 @@ class RAGPipeline:
 
     def __init__(self):
         self.embedding_service = None
-        self.vector_store = VectorStore()
-        self.llm_service = LLMService()
+        self.vector_store = None
+        self.llm_service = None
+
 
     def get_embedding_service(self):
         if self.embedding_service is None:
             self.embedding_service = EmbeddingService()
+
         return self.embedding_service
+
+
+    def get_vector_store(self):
+        if self.vector_store is None:
+            self.vector_store = VectorStore()
+
+        return self.vector_store
+
+
+    def get_llm_service(self):
+        if self.llm_service is None:
+            self.llm_service = LLMService()
+
+        return self.llm_service
+
 
     def add_documents(
         self,
@@ -25,26 +42,34 @@ class RAGPipeline:
             documents
         )
 
-        self.vector_store.add_documents(
+        self.get_vector_store().add_documents(
             documents,
             embeddings,
             document_id
         )
 
-    def answer_question(self, question, document_id):
+
+    def answer_question(
+        self,
+        question,
+        document_id
+    ):
 
         question_embedding = (
             self.get_embedding_service()
             .generate_embedding(question)
         )
 
-        relevant_docs = self.vector_store.search(
+
+        relevant_docs = self.get_vector_store().search(
             question_embedding,
             top_k=3,
             document_id=document_id
         )
 
+
         context = "\n\n".join(relevant_docs)
+
 
         prompt = f"""
 You are an AI Company Knowledge Base Assistant.
@@ -63,6 +88,9 @@ Question:
 Answer:
 """
 
-        answer = self.llm_service.generate_response(prompt)
+
+        answer = self.get_llm_service().generate_response(
+            prompt
+        )
 
         return answer

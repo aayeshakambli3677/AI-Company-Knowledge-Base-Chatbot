@@ -36,35 +36,45 @@ def ask_question(
 ):
 
     try:
+
+        print("CHAT REQUEST RECEIVED:", payload.question)
+
         rag = get_rag()
+
+        print("RAG LOADED")
 
         answer = rag.answer_question(
             payload.question,
             payload.document_id
         )
 
+        print("ANSWER GENERATED")
+
+
+        chat = Chat(
+            user_id=current_user.id,
+            question=payload.question,
+            answer=answer
+        )
+
+        db.add(chat)
+        db.commit()
+        db.refresh(chat)
+
+
+        return {
+            "answer": answer
+        }
+
+
     except Exception as e:
+
         print("CHATBOT ERROR:", e)
 
         raise HTTPException(
             status_code=500,
             detail=str(e)
         )
-
-    # Save chat history
-    chat = Chat(
-        user_id=current_user.id,
-        question=payload.question,
-        answer=answer
-    )
-
-    db.add(chat)
-    db.commit()
-    db.refresh(chat)
-
-    return {
-        "answer": answer
-    }
 
 
 @router.get("/history")
