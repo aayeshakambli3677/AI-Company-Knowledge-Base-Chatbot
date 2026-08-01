@@ -1,19 +1,23 @@
-from sentence_transformers import SentenceTransformer
 from typing import List
 import logging
 
 
 class EmbeddingService:
-    """
-    Service for generating text embeddings using Sentence Transformers.
-    """
 
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         try:
+            from sentence_transformers import SentenceTransformer
+
             self.model = SentenceTransformer(model_name)
-            logging.info(f"Embedding model '{model_name}' loaded successfully.")
+
+            logging.info(
+                f"Embedding model '{model_name}' loaded successfully."
+            )
+
         except Exception as e:
-            logging.error(f"Failed to load embedding model: {e}")
+            logging.error(
+                f"Failed to load embedding model: {e}"
+            )
             raise
 
     def generate_embedding(self, text: str) -> List[float]:
