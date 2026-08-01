@@ -9,16 +9,16 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     # Database
-    DATABASE_URL: str = "mysql+pymysql://root:root@localhost/company_chatbot"
+    DATABASE_URL: str
 
     # JWT
-    SECRET_KEY: str = "your_secret_key"
+    SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     # AI
     OPENAI_API_KEY: str = ""
-    GEMINI_API_KEY: str = ""
+    GEMINI_API_KEY: str
 
     # Vector Store
     VECTOR_DB_PATH: str = "./vector_store"
