@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from app.database.db import get_db
 from app.models.user import User
 
-from app.middleware.auth_middleware import ( get_current_user , admin_required )
+from app.middleware.auth_middleware import admin_required
 
 from app.services.document_service import (
     save_document,
@@ -27,13 +27,13 @@ router = APIRouter(
 )
 
 
-# User + Admin both can upload
+# Only Admin can upload documents
 @router.post("/upload")
 def upload_document(
     title: str = Form(...),
     category_id: int = Form(...),
     file: UploadFile = File(...),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(admin_required),
     db: Session = Depends(get_db)
 ):
 
@@ -83,6 +83,7 @@ def get_document(
     return document
 
 
+# Only Admin can delete documents
 @router.delete("/{document_id}")
 def delete_document_route(
     document_id: int,
