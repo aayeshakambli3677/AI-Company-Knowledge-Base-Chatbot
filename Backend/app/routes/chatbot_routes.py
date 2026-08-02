@@ -28,6 +28,37 @@ router = APIRouter(
 )
 
 
+# @router.post("/ask")
+# def ask_question(
+#     payload: ChatRequest,
+#     current_user: User = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+
+#     try:
+
+#         print("CHAT REQUEST RECEIVED:", payload.question)
+
+#         print("CHATBOT TEST MODE")
+#         answer = "Chatbot route is working"
+#         print("TEST ANSWER GENERATED")
+
+
+#         chat = Chat(
+#             user_id=current_user.id,
+#             question=payload.question,
+#             answer=answer
+#         )
+
+#         db.add(chat)
+#         db.commit()
+#         db.refresh(chat)
+
+
+#         return {
+#             "answer": answer
+#         }
+
 @router.post("/ask")
 def ask_question(
     payload: ChatRequest,
@@ -35,39 +66,11 @@ def ask_question(
     db: Session = Depends(get_db)
 ):
 
-    try:
+    print("CHAT REQUEST RECEIVED")
 
-        print("CHAT REQUEST RECEIVED:", payload.question)
-
-        print("CHATBOT TEST MODE")
-        answer = "Chatbot route is working"
-        print("TEST ANSWER GENERATED")
-
-
-        chat = Chat(
-            user_id=current_user.id,
-            question=payload.question,
-            answer=answer
-        )
-
-        db.add(chat)
-        db.commit()
-        db.refresh(chat)
-
-
-        return {
-            "answer": answer
-        }
-
-
-    except Exception as e:
-
-        print("CHATBOT ERROR:", e)
-
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+    return {
+        "answer": "CHATBOT TEST SUCCESS"
+    }
 
 
 @router.get("/history")
