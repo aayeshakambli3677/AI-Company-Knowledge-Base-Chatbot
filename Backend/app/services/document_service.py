@@ -63,8 +63,9 @@ def save_document(
         for i in range(0, len(text), 500)
     ]
 
-    rag = get_rag()
-    rag.add_documents(chunks, document.id)
+    print("RAG STEP SKIPPED FOR TEST")
+# rag = get_rag()
+# rag.add_documents(chunks, document.id)
 
     print("Chunks:", len(chunks))
 
