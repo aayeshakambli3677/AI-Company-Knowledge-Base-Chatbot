@@ -68,8 +68,12 @@ def ask_question(
 
     print("CHAT REQUEST RECEIVED")
 
+    rag = get_rag()
+
+    print("RAG LOADED")
+
     return {
-        "answer": "CHATBOT TEST SUCCESS"
+        "answer": "RAG LOADED SUCCESSFULLY"
     }
 
 
