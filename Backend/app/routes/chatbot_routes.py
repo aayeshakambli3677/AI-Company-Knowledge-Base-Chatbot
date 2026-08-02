@@ -48,6 +48,16 @@ def ask_question(
 
     print("ANSWER GENERATED")
 
+    chat = Chat(
+        user_id=current_user.id,
+        question=payload.question,
+        answer=answer
+    )
+
+    db.add(chat)
+    db.commit()
+    db.refresh(chat)
+
     return {
         "answer": answer
     }
