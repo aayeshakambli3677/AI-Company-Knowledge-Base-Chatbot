@@ -28,37 +28,6 @@ router = APIRouter(
 )
 
 
-# @router.post("/ask")
-# def ask_question(
-#     payload: ChatRequest,
-#     current_user: User = Depends(get_current_user),
-#     db: Session = Depends(get_db)
-# ):
-
-#     try:
-
-#         print("CHAT REQUEST RECEIVED:", payload.question)
-
-#         print("CHATBOT TEST MODE")
-#         answer = "Chatbot route is working"
-#         print("TEST ANSWER GENERATED")
-
-
-#         chat = Chat(
-#             user_id=current_user.id,
-#             question=payload.question,
-#             answer=answer
-#         )
-
-#         db.add(chat)
-#         db.commit()
-#         db.refresh(chat)
-
-
-#         return {
-#             "answer": answer
-#         }
-
 @router.post("/ask")
 def ask_question(
     payload: ChatRequest,
@@ -72,8 +41,15 @@ def ask_question(
 
     print("RAG LOADED")
 
+    answer = rag.answer_question(
+        payload.question,
+        payload.document_id
+    )
+
+    print("ANSWER GENERATED")
+
     return {
-        "answer": "RAG LOADED SUCCESSFULLY"
+        "answer": answer
     }
 
 
