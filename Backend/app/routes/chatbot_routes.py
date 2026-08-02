@@ -39,16 +39,9 @@ def ask_question(
 
         print("CHAT REQUEST RECEIVED:", payload.question)
 
-        rag = get_rag()
-
-        print("RAG LOADED")
-
-        answer = rag.answer_question(
-            payload.question,
-            payload.document_id
-        )
-
-        print("ANSWER GENERATED")
+        print("CHATBOT TEST MODE")
+        answer = "Chatbot route is working"
+        print("TEST ANSWER GENERATED")
 
 
         chat = Chat(
