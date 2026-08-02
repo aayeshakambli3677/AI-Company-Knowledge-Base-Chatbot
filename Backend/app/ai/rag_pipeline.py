@@ -1,29 +1,12 @@
-from app.ai.embedding_service import EmbeddingService
-from app.ai.vector_store import VectorStore
 from app.ai.llm_service import LLMService
+from app.database.db import SessionLocal
+from app.models.document import Document
 
 
 class RAGPipeline:
 
     def __init__(self):
-        self.embedding_service = None
-        self.vector_store = None
         self.llm_service = None
-
-
-    def get_embedding_service(self):
-        if self.embedding_service is None:
-            self.embedding_service = EmbeddingService()
-
-        return self.embedding_service
-
-
-    def get_vector_store(self):
-        if self.vector_store is None:
-            self.vector_store = VectorStore()
-
-        return self.vector_store
-
 
     def get_llm_service(self):
         if self.llm_service is None:
@@ -31,23 +14,12 @@ class RAGPipeline:
 
         return self.llm_service
 
-
     def add_documents(
         self,
         documents,
         document_id
     ):
-
-        embeddings = self.get_embedding_service().generate_embeddings(
-            documents
-        )
-
-        self.get_vector_store().add_documents(
-            documents,
-            embeddings,
-            document_id
-        )
-
+        pass
 
     def answer_question(
         self,
@@ -55,31 +27,26 @@ class RAGPipeline:
         document_id
     ):
 
-        question_embedding = (
-            self.get_embedding_service()
-            .generate_embedding(question)
-        )
+        db = SessionLocal()
 
+        document = db.query(Document).filter(
+            Document.id == document_id
+        ).first()
 
-        relevant_docs = self.get_vector_store().search(
-            question_embedding,
-            top_k=3,
-            document_id=document_id
-        )
+        if not document:
+            return "Document not found."
 
-
-        context = "\n\n".join(relevant_docs)
-
+        context = document.content or ""
 
         prompt = f"""
 You are an AI Company Knowledge Base Assistant.
 
-Use ONLY the information provided in the context.
+Use ONLY the information provided in the document.
 
-If the answer is not present in the context, reply:
-"I could not find that information in the uploaded company documents."
+If the answer is not present in the document, reply:
+"I could not find that information in the uploaded company document."
 
-Context:
+Document Content:
 {context}
 
 Question:
@@ -88,9 +55,10 @@ Question:
 Answer:
 """
 
-
         answer = self.get_llm_service().generate_response(
             prompt
         )
+
+        db.close()
 
         return answer
