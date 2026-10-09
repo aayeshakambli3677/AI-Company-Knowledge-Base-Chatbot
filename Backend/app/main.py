@@ -19,7 +19,7 @@ Base.metadata.create_all(bind=engine)
 
 origins = [
     "http://localhost:5173",
-    "https://ai-company-knowledge-based-chatbot.netlify.app"
+    "http://127.0.0.1:5173"
 ]
 
 app.add_middleware(
